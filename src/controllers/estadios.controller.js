@@ -5,12 +5,10 @@ const Estadio = require('../models/estadio.model')
 const save = async(req, res, next) => {
     try{
         const dados = req.body
-        console.log(dados)
         const newEstadio = new Estadio(dados)
-        console.log(newEstadio)
         const savedEstadio = await newEstadio.save()
         if(!savedEstadio){
-            throw new error('Sem sucesso no salvamento do estadio')
+            throw new Error('Sem sucesso no salvamento do estadio')
         }
         res.status(201).json({
             message: 'Novo estadio criado'
@@ -35,8 +33,9 @@ const getById = async (req, res, next) =>{
         const id = req.params.id
         const estadio = await Estadio.findById(id)
         if(!estadio){
-            throw new error(`Estadio com id ${id} nao encontrado`)
+            throw new Error(`Estadio com id ${id} nao encontrado`)
         }
+        res.status(200).json(estadio)
     }catch(err){
         next('Erro ao buscar estadio especifico')
     }
@@ -49,10 +48,12 @@ const update = async (req, res, next) => {
 
         const estadio = await Estadio.findById(id)
         if(!estadio){
-            throw new error(`Estadio com id ${id} nao encontrado`)
+            throw new Error(`Estadio com id ${id} nao encontrado`)
         }
-        const updatedStadio = Estadio.findByIdAndUpdate(id, dados, {new: true})
-
+        const updatedStadio = await Estadio.findByIdAndUpdate(id, dados, {new: true})
+        res.status(200).json({
+            message: `Estadio ${updatedStadio.get('name')} atualizado com sucesso`
+        })
     }catch(err){
         next('Falha ao atualizar dados do estadio', err)
     }
@@ -61,16 +62,15 @@ const update = async (req, res, next) => {
 const deleteIt = async (req, res, next) =>{
     try{
         const id = req.params.id
-        const estadio = Estadio.findById(id)
+        const estadio = await Estadio.findById(id)
         if(!estadio){
-            throw new error(`Estadio com id ${id} nao encontrado`)
+            throw new Error(`Estadio com id ${id} nao encontrado`)
         }
         await Estadio.findByIdAndDelete(id)
-        res(201).json({message: `Estadio com id ${id} foi deletado`})
+        res.status(200).json({message: `Estadio ${estadio.get('name')} foi deletado`})
     }catch(err){
         next('Falha ao deletar estadio',err)
     }
-
 }
 
 
