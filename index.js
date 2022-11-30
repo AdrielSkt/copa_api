@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const db = require('./src/utils/db')
 
+const estadioRouter = require('./src/routes/estadios.route')
+
 const port = 3000
 const app = express()
 
@@ -11,7 +13,8 @@ app.get('/', (req, res) => {
     res.send('copa-api is running')
 })
 
-
+// Estadio routes
+app.use('/api/v1/estadios', estadioRouter)
 
 
 app.use((error, req, res, next) => {
