@@ -5,7 +5,7 @@ mongoose.connect(mongodbUrl, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     user: 'copa',
-    pass: '123456'
+    pass: '1234'
 })
 
 const db = mongoose.connection
