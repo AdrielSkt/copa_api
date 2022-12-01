@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const controller = require('../controllers/estadios.controller')
+const controller = require('../controllers/selecao.controller')
 const authz = require('../middlewares/authz.middleware')
+
 
 
 
