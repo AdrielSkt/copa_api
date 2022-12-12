@@ -1,10 +1,8 @@
 const router = require('express').Router()
-const controller = require('../controllers/estadios.controller')
+const controller = require('../controllers/users.controller')
 const authz = require('../middlewares/authz.middleware')
 
-
-
-router.post('/', authz, controller.save)
+router.post('/', controller.save)
 
 router.get('/', authz, controller.getAll)
 
@@ -12,7 +10,8 @@ router.get('/:id', authz, controller.getById)
 
 router.put('/:id', authz, controller.update)
 
-router.delete('/:id', controller.deleteIt)
+router.delete('/:id', authz, controller.remove)
 
+router.post('/authenticate', controller.authenticate)
 
-module.exports = router 
+module.exports = router
