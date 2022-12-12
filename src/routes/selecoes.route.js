@@ -13,7 +13,7 @@ router.get('/:id', authz, controller.getById)
 
 router.put('/:id', authz, controller.update)
 
-router.put('/:id', authz, controller.deleteIt)
+router.delete('/:id', authz, controller.deleteIt)
 
 
 module.exports = router 
